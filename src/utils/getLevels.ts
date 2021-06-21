@@ -1,14 +1,13 @@
-export const getLevels = (levelTexts: string): string[][][] => {
-    const levelStrings = levelTexts
-        .split(';')
-        .map((levelString) => {
-            return levelString
-                .replace(/[^#.$*@\s]/g, '')
-                .split('\n')
-                .filter((level) => !!level.trim())
-                .map((level) => level.split(''));
-        })
-        .filter((levelString) => !!levelString.length);
+import levelFilePath from '../assets/txt/Intro.txt';
+import { getLevelsFileData } from './getLevelsFileData';
+import { getLevelsFromText } from './getLevelsFromText';
 
-    return levelStrings;
+export const getLevels = async (): Promise<string[][][]> => {
+    try {
+        const res = await getLevelsFileData(levelFilePath);
+        if (res) return getLevelsFromText(res);
+        throw new Error('Unable to load levels');
+    } catch (err) {
+        throw err;
+    }
 };

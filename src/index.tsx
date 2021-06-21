@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { ThemeProvider } from 'styled-components';
 import Routes from './routes';
 import reportWebVitals from './reportWebVitals';
-import { defaultTheme } from './theme';
+import { defaultTheme } from './theme/default';
 import GlobalStyle from './theme/globalStyle';
 
 ReactDOM.render(

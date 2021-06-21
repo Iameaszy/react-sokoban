@@ -1,4 +1,4 @@
-export const getLevelString = async (path: string) => {
+export const getLevelsFileData = async (path: string): Promise<string | undefined> => {
     try {
         const res = await fetch(path);
         const data = await res.text();
