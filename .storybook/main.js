@@ -7,6 +7,8 @@ module.exports = {
         "@storybook/addon-links",
         "@storybook/theming",
         "@storybook/addon-essentials",
-        "@storybook/preset-create-react-app"
+        "@storybook/preset-create-react-app",
+        "storybook-dark-mode",
+        "storybook-color-picker"
     ]
 }

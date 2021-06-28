@@ -1,5 +1,5 @@
 ######
-#@$ .#
+#@ $.#
 ######
 ; level 1:An introduction to the game
 

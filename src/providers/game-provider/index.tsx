@@ -1,9 +1,8 @@
 import React, { createContext, useContext, useState } from 'react';
 import { GameManager } from './GameManager';
+import { Props } from './types';
 
 const GameContext = createContext<GameManager | null>(null);
-
-type Props = {};
 
 export const GameProvider: React.FC<Props> = ({ children }) => {
     const [gameManager] = useState(() => new GameManager());
