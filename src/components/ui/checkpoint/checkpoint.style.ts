@@ -1,8 +1,8 @@
 import { CheckpointProps } from './types/index';
 import styled from 'styled-components/macro';
-import { Box } from '../box';
+import { StyledSpace } from '../space/space.style';
 
-export const StyledCheckpoint = styled(Box)`
+export const StyledCheckpoint = styled(StyledSpace)`
     border: none;
     display: flex;
     justify-content: center;
@@ -10,8 +10,8 @@ export const StyledCheckpoint = styled(Box)`
 `;
 
 export const StyledDot = styled.div<CheckpointProps>`
-    width: ${(props) => props.width || '15px'};
-    height: ${(props) => props.height || '15px'};
+    width: ${(props) => props.width || '20px'};
+    height: ${(props) => props.height || '20px'};
     border: none;
     background: green;
     border-radius: 100%;

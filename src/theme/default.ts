@@ -7,13 +7,8 @@ export const defaultTheme: DefaultTheme = {
             black: '#222831',
             white: '#ffffff',
         },
-        primary: {
-            main: '#726a95',
-            contrastText: '#ffffff',
-        },
-        secondary: {
-            main: '#709fb0',
-            contrastText: '#ffffff',
-        },
+        primary: '#934B25',
+        secondary: '#3E8103',
+        bgColor: '#E6E6E6',
     },
 };

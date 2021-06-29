@@ -18,7 +18,3 @@ export const CharacterContainer = styled.div`
 export const StyledRow = styled.div`
     display: flex;
 `;
-
-export const Space = styled(Box)`
-    border: none;
-`;

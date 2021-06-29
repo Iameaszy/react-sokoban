@@ -1,11 +1,10 @@
-import { BoxProps } from './types/index';
 import styled from 'styled-components/macro';
+import { StyledSpace } from '../space/space.style';
 
-export const StyledBox = styled.div<BoxProps>`
-    width: ${(props) => props.width || '30px'};
-    height: ${(props) => props.height || '30px'};
-    border: solid green;
-    box-sizing: border-box;
-    border-radius: 5px;
-    background: ${(props) => props.backgroundColor};
+export const StyledBox = styled(StyledSpace)`
+    &&& {
+        border: solid green;
+        background: transparent;
+        border-radius: 5px;
+    }
 `;

@@ -1,4 +1,5 @@
-import { DirectionEnum, GameCharacters, GameState } from './types';
+import { Directions } from './types/index';
+import { GameCharacters, GameState } from './types';
 import { getLevels } from './../../utils';
 import { gameCharacters } from './constants';
 export class GameManager {
@@ -9,6 +10,8 @@ export class GameManager {
     board: GameCharacters[][] = [];
     checkPoints = 0;
     playerPos = [-1, -1];
+    boardCallbacks: { (value: GameCharacters[][]): void }[] = [];
+    levelsCallbacks: { (value: string[][][]): void }[] = [];
 
     public async initializeGame(): Promise<void> {
         this.levels = [];
@@ -26,6 +29,7 @@ export class GameManager {
 
     private async load() {
         this.levels = await getLevels();
+        this.publishLevels();
     }
 
     public async quitGame() {
@@ -61,16 +65,16 @@ export class GameManager {
         }, this.playerPos);
     }
 
-    private getNextPosition(currentPosition: number[], direction: DirectionEnum) {
+    private getNextPosition(currentPosition: number[], direction: keyof Directions) {
         const [row, col] = currentPosition;
         switch (direction) {
-            case DirectionEnum.UP:
+            case 'ArrowUp':
                 return [row - 1, col];
-            case DirectionEnum.DOWN:
+            case 'ArrowDown':
                 return [row + 1, col];
-            case DirectionEnum.LEFT:
+            case 'ArrowLeft':
                 return [row, col - 1];
-            case DirectionEnum.RIGHT:
+            case 'ArrowRight':
                 return [row, col + 1];
             default:
                 return currentPosition;
@@ -100,7 +104,7 @@ export class GameManager {
         this.setPlayerPosition(nextTile);
     }
 
-    private pushBox(boxPosition: number[], direction: DirectionEnum) {
+    private pushBox(boxPosition: number[], direction: keyof Directions) {
         const nextTile = this.getNextPosition(boxPosition, direction);
         const nextCharacter = this.getBoardTile(nextTile);
 
@@ -113,7 +117,7 @@ export class GameManager {
         }
     }
 
-    private pushBoxOnCheckpoint(boxPosition: number[], direction: DirectionEnum) {
+    private pushBoxOnCheckpoint(boxPosition: number[], direction: keyof Directions) {
         const nextTile = this.getNextPosition(boxPosition, direction);
         const nextCharacter = this.getBoardTile(nextTile);
 
@@ -132,9 +136,8 @@ export class GameManager {
         }, this.checkPoints);
     }
 
-    public move(direction: DirectionEnum) {
+    public move(direction: keyof Directions) {
         if (this.gameState !== GameState.PlAYING) return;
-
         const nextTile = this.getNextPosition(this.playerPos, direction);
         const nextCharacter = this.getBoardTile(nextTile);
 
@@ -148,5 +151,36 @@ export class GameManager {
             case gameCharacters.boxOnCheckpoint:
                 this.pushBoxOnCheckpoint(nextTile, direction);
         }
+
+        this.publishBoard();
+    }
+
+    // Subscriptions
+    subscribeToBoard(cb: (board: GameCharacters[][]) => void) {
+        this.boardCallbacks.push(cb);
+    }
+
+    unsubscribeFromBoard = (callbackToRemove: (board: GameCharacters[][]) => void): void => {
+        this.boardCallbacks = this.boardCallbacks.filter((callback) => callback !== callbackToRemove);
+    };
+
+    private publishBoard() {
+        this.boardCallbacks.forEach((callback) => {
+            callback([...this.board]);
+        });
+    }
+
+    subscribeToLevels(cb: (levels: string[][][]) => void) {
+        this.levelsCallbacks.push(cb);
+    }
+
+    unsubscribeFromLevels = (callbackToRemove: (levels: string[][][]) => void): void => {
+        this.levelsCallbacks = this.levelsCallbacks.filter((callback) => callback !== callbackToRemove);
+    };
+
+    private publishLevels() {
+        this.levelsCallbacks.forEach((callback) => {
+            callback(this.levels);
+        });
     }
 }

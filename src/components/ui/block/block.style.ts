@@ -1,12 +1,8 @@
-import { boardBlock } from './../../../assets/images';
-import { BlockProps } from './types/index';
+import { StyledSpace } from './../space/space.style';
 import styled from 'styled-components/macro';
+import { boardBlock } from '../../../assets/images';
 
-export const StyledBlock = styled.div<BlockProps>`
-    width: ${(props) => props.width || '30px'};
-    height: ${(props) => props.height || '30px'};
-    border: none;
-    background-color: #944b25;
+export const StyledBlock = styled(StyledSpace)`
+    background-color: #934b25;
     background-image: url(${boardBlock});
-    background-size: contain;
 `;

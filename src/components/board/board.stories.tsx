@@ -5,6 +5,8 @@ import { Meta } from '@storybook/react';
 
 import { Board as GameBoard } from './index';
 import { GameProvider } from '../../providers/game-provider';
+import { LevelsProvider } from '../../providers/levels-provider';
+import { BoardProvider } from '../../providers/board-provider';
 
 export default {
     title: 'Components/Board',
@@ -13,6 +15,10 @@ export default {
 
 export const Board: React.VFC<Record<string, never>> = () => (
     <GameProvider>
-        <GameBoard />
+        <LevelsProvider>
+            <BoardProvider>
+                <GameBoard />
+            </BoardProvider>
+        </LevelsProvider>
     </GameProvider>
 );
