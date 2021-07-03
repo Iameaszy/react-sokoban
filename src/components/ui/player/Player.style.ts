@@ -1,4 +1,4 @@
-import { StyledSpace } from './../space/space.style';
+import { StyledSpace } from '../space/Space.style';
 import { playerImg } from '../../../assets/images';
 import { PlayerProps } from './types/index';
 import styled from 'styled-components/macro';

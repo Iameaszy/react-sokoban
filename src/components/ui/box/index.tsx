@@ -1,4 +1,4 @@
-import { StyledBox } from './box.style';
+import { StyledBox } from './Box.style';
 import React, { ReactElement } from 'react';
 import { BoxProps } from './types';
 

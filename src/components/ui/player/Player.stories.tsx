@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import { Player as PlayerBlock } from './';
+import { Player as PlayerBlock } from '.';
 import { PlayerProps } from './types';
 
 export default {

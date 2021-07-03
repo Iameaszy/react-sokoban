@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { StyledSpace } from '../space/space.style';
+import { StyledSpace } from '../space/Space.style';
 
 export const StyledBox = styled(StyledSpace)`
     &&& {

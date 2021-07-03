@@ -1,6 +1,5 @@
-import { boardBackground } from './../../assets/images';
 import styled from 'styled-components/macro';
-import { Box } from '../ui/box';
+import { boardBackground } from '../../assets/images';
 
 export const StyledBoard = styled.div`
     background: white;

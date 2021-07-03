@@ -1,4 +1,4 @@
-import { StyledCheckpoint, StyledDot } from './checkpoint.style';
+import { StyledCheckpoint, StyledDot } from './Checkpoint.style';
 import React, { ReactElement } from 'react';
 import { CheckpointProps } from './types';
 

@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
 
-import Board from './index';
+import Board from '.';
 
 export default {
     title: 'Screens/Board',

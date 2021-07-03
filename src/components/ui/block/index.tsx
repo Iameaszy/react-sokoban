@@ -1,4 +1,4 @@
-import { StyledBlock } from './block.style';
+import { StyledBlock } from './Block.style';
 import React, { ReactElement } from 'react';
 import { BlockProps } from './types';
 

@@ -1,0 +1,28 @@
+{
+    "parser": "@typescript-eslint/parser",
+    "extends": ["plugin:prettier/recommended", "airbnb-typescript"],
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "project": "./tsconfig.eslint.json"
+    },
+    "rules": {
+        "react/prop-types": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "react/jsx-indent": "off",
+        "@typescript-eslint/indent": "off",
+        "max-len": ["error", { "code": 120 }],
+        "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+        "import/prefer-default-export": "off",
+        "react/jsx-props-no-spreading": "off",
+        "react/require-default-props": "off"
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    }
+}

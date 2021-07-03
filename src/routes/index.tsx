@@ -1,14 +1,16 @@
 import React, { ReactElement } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import App from '../App';
-import Board from '../screens/board';
+import { Board } from '../components/board';
+import { GameControls } from '../components/game-controls';
 
 export default function Routes(): ReactElement {
     return (
         <Router>
             <Switch>
-                <Route path="/" component={App} />
-                <Route path="/board" component={Board} />
+                <Route path="/" component={GameControls} />
+                <Route path="/playground" component={Board} />
+                <Route path="/app" component={App} />
             </Switch>
         </Router>
     );

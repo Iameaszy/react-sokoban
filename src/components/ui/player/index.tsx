@@ -1,4 +1,4 @@
-import { StyledPlayer } from './player.style';
+import { StyledPlayer } from './Player.style';
 import React, { ReactElement } from 'react';
 import { PlayerProps } from './types';
 

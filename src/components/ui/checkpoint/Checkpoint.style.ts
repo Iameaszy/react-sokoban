@@ -1,9 +1,9 @@
 import { CheckpointProps } from './types/index';
 import styled from 'styled-components/macro';
-import { StyledSpace } from '../space/space.style';
+import { StyledSpace } from '../space/Space.style';
 
-export const StyledCheckpoint = styled(StyledSpace)`
-    border: none;
+export const StyledCheckpoint = styled(StyledSpace)<CheckpointProps>`
+    border: ${({ border }) => border || 'none'};
     display: flex;
     justify-content: center;
     align-items: center;

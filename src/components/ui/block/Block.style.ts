@@ -1,4 +1,4 @@
-import { StyledSpace } from './../space/space.style';
+import { StyledSpace } from '../space/Space.style';
 import styled from 'styled-components/macro';
 import { boardBlock } from '../../../assets/images';
 
