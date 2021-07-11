@@ -1,16 +1,39 @@
-import { Directions } from './types/index';
-import { GameCharacters, GameState } from './types';
-import { getLevels } from './../../utils';
+import { Directions, GameCharacters, GameState } from './types/index';
+
+import { getLevels } from '../../utils';
 import { gameCharacters } from './constants';
+
 export class GameManager {
     levels: string[][][] = [];
+
     currentLevel = 0;
+
     gameStarted = false;
+
     gameState: GameState = GameState.STOPPED;
+
     board: GameCharacters[][] = [];
+
     checkPoints = 0;
+
     playerPos = [-1, -1];
+
+    stage: number = 1;
+
+    playerName = '';
+
+    timer: any = null;
+
+    private hasWon = false;
+
+    heroOn = false;
+
+    currentTime = 0;
+
+    stageCallbacks: { (value: number): void }[] = [];
+
     boardCallbacks: { (value: GameCharacters[][]): void }[] = [];
+
     levelsCallbacks: { (value: string[][][]): void }[] = [];
 
     public async initializeGame(): Promise<void> {
@@ -40,6 +63,8 @@ export class GameManager {
         this.currentLevel = level;
         this.board = this.getBoard(level - 1);
         this.playerPos = this.getPlayerPositon();
+
+        this.publishBoard();
     }
 
     public getBoard(level?: number) {
@@ -65,7 +90,11 @@ export class GameManager {
         }, this.playerPos);
     }
 
-    private getNextPosition(currentPosition: number[], direction: keyof Directions) {
+    public checkPlayeHasWon() {
+        return this.hasWon;
+    }
+
+    private static getNextPosition(currentPosition: number[], direction: keyof Directions) {
         const [row, col] = currentPosition;
         switch (direction) {
             case 'ArrowUp':
@@ -105,7 +134,7 @@ export class GameManager {
     }
 
     private pushBox(boxPosition: number[], direction: keyof Directions) {
-        const nextTile = this.getNextPosition(boxPosition, direction);
+        const nextTile = GameManager.getNextPosition(boxPosition, direction);
         const nextCharacter = this.getBoardTile(nextTile);
 
         if (nextCharacter === gameCharacters.checkpoint) {
@@ -118,7 +147,7 @@ export class GameManager {
     }
 
     private pushBoxOnCheckpoint(boxPosition: number[], direction: keyof Directions) {
-        const nextTile = this.getNextPosition(boxPosition, direction);
+        const nextTile = GameManager.getNextPosition(boxPosition, direction);
         const nextCharacter = this.getBoardTile(nextTile);
 
         if (nextCharacter === gameCharacters.checkpoint) {
@@ -131,14 +160,15 @@ export class GameManager {
     }
 
     public setCheckPoints() {
-        this.checkPoints = this.board.reduce((checkpoint, row) => {
-            return checkpoint + row.filter((col) => col === '.').length;
-        }, this.checkPoints);
+        this.checkPoints = this.board.reduce(
+            (checkpoint, row) => checkpoint + row.filter((col) => col === '.').length,
+            this.checkPoints,
+        );
     }
 
     public move(direction: keyof Directions) {
         if (this.gameState !== GameState.PlAYING) return;
-        const nextTile = this.getNextPosition(this.playerPos, direction);
+        const nextTile = GameManager.getNextPosition(this.playerPos, direction);
         const nextCharacter = this.getBoardTile(nextTile);
 
         switch (nextCharacter) {
@@ -151,8 +181,8 @@ export class GameManager {
             case gameCharacters.boxOnCheckpoint:
                 this.pushBoxOnCheckpoint(nextTile, direction);
         }
-
         this.publishBoard();
+        this.checkHasWon();
     }
 
     // Subscriptions
@@ -168,6 +198,41 @@ export class GameManager {
         this.boardCallbacks.forEach((callback) => {
             callback([...this.board]);
         });
+    }
+
+    subscribeToStage(cb: (stage: number) => void) {
+        this.stageCallbacks.push(cb);
+    }
+
+    unsubscribeFromStage = (callbackToRemove: (stage: number) => void): void => {
+        this.stageCallbacks = this.stageCallbacks.filter((callback) => callback !== callbackToRemove);
+    };
+
+    private publishStage() {
+        this.stageCallbacks.forEach((callback) => {
+            callback(this.stage + 1);
+        });
+    }
+
+    private countChar(char: string) {
+        return this.board.reduce(
+            (count, row) => count + row.reduce((count, col) => (col === char ? count + 1 : count), 0),
+            0,
+        );
+    }
+
+    private checkStage1HasWon() {
+        const countCheckpoint = this.countChar(gameCharacters.checkpoint);
+        const playerOnCheckpoint = this.countChar(gameCharacters.playerOnCheckpoint);
+        if (countCheckpoint === playerOnCheckpoint) {
+            this.publishStage();
+        }
+    }
+
+    private checkHasWon() {
+        if (this.stage === 1) {
+            this.checkStage1HasWon();
+        }
     }
 
     subscribeToLevels(cb: (levels: string[][][]) => void) {

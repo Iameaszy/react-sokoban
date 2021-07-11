@@ -1,10 +1,7 @@
-import { HTMLAttributes } from 'react';
+import { InputHTMLAttributes } from 'react';
 
-export type FormInputProps = Omit<HTMLAttributes<HTMLInputElement>, 'css'> & {
+export type FormInputProps = InputHTMLAttributes<HTMLInputElement> & {
     placeholder?: string;
     value: string;
     handleInputChange: (value: string) => void;
-    width?: string;
-    height?: string;
-    padding?: string;
 };
