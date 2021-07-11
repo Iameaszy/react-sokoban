@@ -1,5 +1,5 @@
-import { useGameManager } from '../game-provider/index';
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { useGameManager } from '../game-provider/index';
 import { Props } from './types';
 import { GameCharacters } from '../game-provider/types';
 
@@ -10,14 +10,11 @@ export const BoardProvider: React.FC<Props> = ({ children }) => {
     const [board, setBoard] = useState<GameCharacters[][] | null>([]);
 
     useEffect(() => {
-        const subscribeToBoard = (board: GameCharacters[][]) => {
-            setBoard(board);
-        };
+        const subscribeToBoard = (board: GameCharacters[][]) => setBoard(board);
+
         gameManager.subscribeToBoard(subscribeToBoard);
         return () => gameManager.unsubscribeFromBoard(subscribeToBoard);
     }, []);
-
-    useEffect(() => {}, [board]);
 
     return <BoardContext.Provider value={board}>{children}</BoardContext.Provider>;
 };

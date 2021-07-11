@@ -1,10 +1,6 @@
 import styled from 'styled-components/macro';
-import { boardBackground } from '../../assets/images/index';
-import { StyledWrapper } from '../../components/ui/wrapper/Wrapper.style';
+import { CenterElement } from '../../utils/centerElement';
 
-export const StyleHome = styled(StyledWrapper)`
-    &&& {
-        background-image: url(${boardBackground});
-        width: 100%;
-    }
+export const StyledHome = styled.div`
+    ${CenterElement};
 `;

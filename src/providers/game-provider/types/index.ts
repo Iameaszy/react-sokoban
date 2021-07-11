@@ -1,4 +1,4 @@
-import { gameCharacters } from './../constants/index';
+import { gameCharacters } from '../constants/index';
 
 export type Props = {};
 

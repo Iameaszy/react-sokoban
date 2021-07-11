@@ -5,7 +5,6 @@ export const StyledGameContols = styled(StyledWrapper)`
     &&& {
         background-color: transparent;
         position: relative;
-        width: 100%;
     }
 `;
 

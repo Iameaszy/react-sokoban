@@ -1,6 +1,12 @@
 import React, { ReactElement } from 'react';
-import { StyleHome } from './Home.style';
+import { GameControls } from '../../components/game-controls';
+import { gameControls } from './data';
+import { StyledHome } from './Home.style';
 
-export default function Home(): ReactElement {
-    return <StyleHome>hello</StyleHome>;
+export default function HomeScreen(): ReactElement {
+    return (
+        <StyledHome>
+            <GameControls controls={gameControls} />
+        </StyledHome>
+    );
 }

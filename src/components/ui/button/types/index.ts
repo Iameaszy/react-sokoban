@@ -1,5 +1,5 @@
-import { HTMLAttributes } from 'react';
+import { ButtonHTMLAttributes } from 'react';
 
-export type ButtonProps = Omit<HTMLAttributes<HTMLButtonElement>, 'css'> & {
+export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
     text: string;
 };

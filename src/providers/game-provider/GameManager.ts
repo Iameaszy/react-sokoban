@@ -1,16 +1,39 @@
-import { Directions } from './types/index';
-import { GameCharacters, GameState } from './types';
-import { getLevels } from './../../utils';
+import { Directions, GameCharacters, GameState } from './types/index';
+
+import { getLevels } from '../../utils';
 import { gameCharacters } from './constants';
+
 export class GameManager {
     levels: string[][][] = [];
+
     currentLevel = 0;
+
     gameStarted = false;
+
     gameState: GameState = GameState.STOPPED;
+
     board: GameCharacters[][] = [];
+
     checkPoints = 0;
+
     playerPos = [-1, -1];
+
+    stage: number = 1;
+
+    playerName = '';
+
+    timer: any = null;
+
+    private hasWon = false;
+
+    heroOn = false;
+
+    currentTime = 0;
+
+    stageCallbacks: { (value: number): void }[] = [];
+
     boardCallbacks: { (value: GameCharacters[][]): void }[] = [];
+
     levelsCallbacks: { (value: string[][][]): void }[] = [];
 
     public async initializeGame(): Promise<void> {
@@ -40,6 +63,8 @@ export class GameManager {
         this.currentLevel = level;
         this.board = this.getBoard(level - 1);
         this.playerPos = this.getPlayerPositon();
+
+        this.publishBoard();
     }
 
     public getBoard(level?: number) {
@@ -65,7 +90,11 @@ export class GameManager {
         }, this.playerPos);
     }
 
-    private getNextPosition(currentPosition: number[], direction: keyof Directions) {
+    public checkPlayeHasWon() {
+        return this.hasWon;
+    }
+
+    private static getNextPosition(currentPosition: number[], direction: keyof Directions) {
         const [row, col] = currentPosition;
         switch (direction) {
             case 'ArrowUp':
@@ -91,54 +120,73 @@ export class GameManager {
         this.board[row][col] = character;
     }
 
-    private movePlayer(nextTile: number[]) {
+    private movePlayer(nextTile: number[], character?: GameCharacters) {
         const player = this.getBoardTile(this.playerPos);
-
+        console.log({ player });
         if (player === gameCharacters.player) {
             this.moveCharacter(this.playerPos, gameCharacters.space);
         } else if (player === gameCharacters.playerOnCheckpoint) {
-            this.moveCharacter(this.playerPos, gameCharacters.checkpoint);
+            this.moveCharacter(this.playerPos, character || gameCharacters.checkpoint);
         }
 
         this.moveCharacter(nextTile, gameCharacters.player);
         this.setPlayerPosition(nextTile);
     }
 
-    private pushBox(boxPosition: number[], direction: keyof Directions) {
-        const nextTile = this.getNextPosition(boxPosition, direction);
+    private pushBox(boxPosition: number[], direction: keyof Directions, box: GameCharacters) {
+        const nextTile = GameManager.getNextPosition(boxPosition, direction);
         const nextCharacter = this.getBoardTile(nextTile);
 
-        if (nextCharacter === gameCharacters.checkpoint) {
-            this.moveCharacter(nextTile, gameCharacters.boxOnCheckpoint);
-            this.movePlayer(boxPosition);
-        } else if (nextCharacter === gameCharacters.space) {
-            this.moveCharacter(nextTile, gameCharacters.box);
-            this.movePlayer(boxPosition);
+        switch (nextCharacter) {
+            case gameCharacters.checkpoint:
+            case gameCharacters.blackCheckpoint:
+            case gameCharacters.greenCheckpoint:
+            case gameCharacters.orangeCheckpoint:
+            case gameCharacters.redCheckpoint:
+            case gameCharacters.xCheckpoint:
+            case gameCharacters.yCheckpoint:
+                this.moveCharacter(nextTile, gameCharacters.boxOnCheckpoint);
+                this.movePlayer(boxPosition, gameCharacters.playerOnCheckpoint);
+                break;
+            case gameCharacters.space:
+                this.moveCharacter(nextTile, box);
+                this.movePlayer(boxPosition);
+                break;
         }
     }
 
     private pushBoxOnCheckpoint(boxPosition: number[], direction: keyof Directions) {
-        const nextTile = this.getNextPosition(boxPosition, direction);
+        const nextTile = GameManager.getNextPosition(boxPosition, direction);
         const nextCharacter = this.getBoardTile(nextTile);
 
-        if (nextCharacter === gameCharacters.checkpoint) {
-            this.moveCharacter(nextTile, gameCharacters.boxOnCheckpoint);
-            this.movePlayer(boxPosition);
-        } else if (nextCharacter === gameCharacters.space) {
-            this.moveCharacter(nextTile, gameCharacters.box);
-            this.movePlayer(boxPosition);
+        switch (nextCharacter) {
+            case gameCharacters.checkpoint:
+            case gameCharacters.blackCheckpoint:
+            case gameCharacters.greenCheckpoint:
+            case gameCharacters.orangeCheckpoint:
+            case gameCharacters.redCheckpoint:
+            case gameCharacters.xCheckpoint:
+            case gameCharacters.yCheckpoint:
+                this.moveCharacter(nextTile, gameCharacters.boxOnCheckpoint);
+                this.movePlayer(boxPosition);
+                break;
+            case gameCharacters.space:
+                this.moveCharacter(nextTile, gameCharacters.box);
+                this.movePlayer(boxPosition);
+                break;
         }
     }
 
     public setCheckPoints() {
-        this.checkPoints = this.board.reduce((checkpoint, row) => {
-            return checkpoint + row.filter((col) => col === '.').length;
-        }, this.checkPoints);
+        this.checkPoints = this.board.reduce(
+            (checkpoint, row) => checkpoint + row.filter((col) => col === '.').length,
+            this.checkPoints,
+        );
     }
 
     public move(direction: keyof Directions) {
         if (this.gameState !== GameState.PlAYING) return;
-        const nextTile = this.getNextPosition(this.playerPos, direction);
+        const nextTile = GameManager.getNextPosition(this.playerPos, direction);
         const nextCharacter = this.getBoardTile(nextTile);
 
         switch (nextCharacter) {
@@ -146,13 +194,19 @@ export class GameManager {
                 this.movePlayer(nextTile);
                 break;
             case gameCharacters.box:
-                this.pushBox(nextTile, direction);
+            case gameCharacters.blackBox:
+            case gameCharacters.orangeBox:
+            case gameCharacters.greenBox:
+            case gameCharacters.redBox:
+            case gameCharacters.xBox:
+            case gameCharacters.yBox:
+                this.pushBox(nextTile, direction, nextCharacter);
                 break;
             case gameCharacters.boxOnCheckpoint:
                 this.pushBoxOnCheckpoint(nextTile, direction);
         }
-
         this.publishBoard();
+        this.checkHasWon();
     }
 
     // Subscriptions
@@ -168,6 +222,41 @@ export class GameManager {
         this.boardCallbacks.forEach((callback) => {
             callback([...this.board]);
         });
+    }
+
+    subscribeToStage(cb: (stage: number) => void) {
+        this.stageCallbacks.push(cb);
+    }
+
+    unsubscribeFromStage = (callbackToRemove: (stage: number) => void): void => {
+        this.stageCallbacks = this.stageCallbacks.filter((callback) => callback !== callbackToRemove);
+    };
+
+    private publishStage() {
+        this.stageCallbacks.forEach((callback) => {
+            callback(this.stage + 1);
+        });
+    }
+
+    private countChar(char: string) {
+        return this.board.reduce(
+            (count, row) => count + row.reduce((count, col) => (col === char ? count + 1 : count), 0),
+            0,
+        );
+    }
+
+    private checkStage1HasWon() {
+        const countCheckpoint = this.countChar(gameCharacters.checkpoint);
+        const playerOnCheckpoint = this.countChar(gameCharacters.playerOnCheckpoint);
+        if (countCheckpoint === playerOnCheckpoint) {
+            this.publishStage();
+        }
+    }
+
+    private checkHasWon() {
+        if (this.stage === 1) {
+            this.checkStage1HasWon();
+        }
     }
 
     subscribeToLevels(cb: (levels: string[][][]) => void) {
