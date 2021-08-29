@@ -46,7 +46,5 @@ export const getCharacter = (character: GameCharacters) => {
             return <Checkpoint backgroundColor="red" />;
         case gameCharacters.boxOnCheckpoint:
             return <BoxOnCheckpoint />;
-        default:
-            return <Box />;
     }
 };

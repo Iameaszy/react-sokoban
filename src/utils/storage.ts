@@ -4,10 +4,6 @@ import { Player } from './types';
 const KEY = 'player';
 
 export class Storage {
-    public static init() {
-        Storage.setPlayer({ name: '', score: 0 });
-    }
-
     public static setPlayer(player: Player) {
         localStorage.setItem(KEY, JSON.stringify(player));
     }

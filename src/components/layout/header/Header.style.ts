@@ -37,6 +37,17 @@ export const ScoreBar = styled.div`
     ${InlineBlock}
 `;
 
+export const EquationsBar = styled.div``;
+
+export const EquationBar = styled.div`
+    ${InlineBlock}
+    display:flex;
+    margin: 0;
+    margin-bottom: 10px;
+    padding: 5px;
+    height: 2.3rem;
+`;
+
 export const BarWrapper = styled.div`
     display: flex;
     justify-content: space-between;
@@ -45,4 +56,8 @@ export const BarWrapper = styled.div`
 export const NameStageBarWrapper = styled.div`
     display: flex;
     flex-direction: column;
+`;
+
+export const EquationText = styled.span`
+    margin-right: 10px;
 `;

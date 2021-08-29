@@ -28,7 +28,7 @@ export const Body = styled.div`
 
 export const Mission = styled.div`
     font-family: sans-serif;
-    color: darkturquoise;
+    color: aqua;
     font-weight: bold;
 `;
 export const H3 = styled.h3`
