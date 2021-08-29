@@ -11,16 +11,16 @@ export const Header = ({ ...rest }: Props): ReactElement => {
         console.log('stage changed', stage);
     }, [stage]);
 
-    const { name, score } = Storage.getPlayer();
+    // const { name, score } = Storage.getPlayer();
 
     return (
         <StyledHeader {...rest}>
             <BarWrapper>
                 <NameStageBarWrapper>
-                    <NameBar>{name}</NameBar>
+                    <NameBar>{'Yusuf'}</NameBar>
                     <StageBar>{`Stage ${stage}`}</StageBar>
                 </NameStageBarWrapper>
-                <ScoreBar>{score}</ScoreBar>
+                <ScoreBar>0</ScoreBar>
                 <TimeBar>00:29:59</TimeBar>
             </BarWrapper>
         </StyledHeader>
