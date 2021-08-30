@@ -3,10 +3,11 @@ import { StyledButton } from '../ui/button/Button.style';
 
 export const StyledHero = styled.div`
     background: #326332;
-    padding: 10px;
+    padding: 0 10px;
     color: white;
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-direction: column;
     height: 100vh;
 `;
@@ -30,6 +31,7 @@ export const Mission = styled.div`
     font-family: sans-serif;
     color: aqua;
     font-weight: bold;
+    line-height: 1.5;
 `;
 export const H3 = styled.h3`
     margin: 0;
@@ -53,4 +55,23 @@ export const Button = styled(StyledButton)`
             background-color: black;
         }
     }
+`;
+
+export const EquationsWrapper = styled.div`
+    font-weight: bold;
+    font-size: 25px;
+    display: flex;
+`;
+export const EquationsTitle = styled.div``;
+export const Equation = styled.div`
+    margin-bottom: 10px;
+`;
+export const EquationOneTwoWrapper = styled.div`
+    margin-left: 10px;
+`;
+export const StyledHeroContent = styled.div`
+    background: #a73737;
+    width: 60%;
+    height: 100%;
+    padding-top: 5rem;
 `;

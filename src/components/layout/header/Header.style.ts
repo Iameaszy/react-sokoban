@@ -18,7 +18,7 @@ const InlineBlock = css`
 
 export const StyledHeader = styled.div`
     box-sizing: border-box;
-    margin-bottom: 10px;
+    //margin-bottom: 10px;
     background: #6a3f2b;
     padding: 5px;
 `;
@@ -46,6 +46,8 @@ export const EquationBar = styled.div`
     margin-bottom: 10px;
     padding: 5px;
     height: 2.3rem;
+    width: unset;
+    min-width: 8rem;
 `;
 
 export const BarWrapper = styled.div`

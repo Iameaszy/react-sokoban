@@ -31,18 +31,18 @@ export const Header = ({ ...rest }: Props): ReactElement => {
                     <NameBar>{name}</NameBar>
                     <StageBar>{`Stage ${stage}`}</StageBar>
                 </NameStageBarWrapper>
-                <ScoreBar>{score}</ScoreBar>
+                <ScoreBar>{160}</ScoreBar>
                 <EquationsBar>
                     <EquationBar>
                         <EquationText>Eqn 1:</EquationText>
-                        <span>??</span>
+                        <span>2x + 3y = 8</span>
                     </EquationBar>
                     <EquationBar>
                         <EquationText>Eqn 2:</EquationText>
-                        <span>??</span>
+                        <span>3x + 2y = 7</span>
                     </EquationBar>
                 </EquationsBar>
-                <TimeBar>00:29:59</TimeBar>
+                <TimeBar>9:30:59</TimeBar>
             </BarWrapper>
         </StyledHeader>
     );

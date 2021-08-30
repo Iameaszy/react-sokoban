@@ -1,5 +1,6 @@
 import styled from 'styled-components/macro';
 import { boardBackground } from '../../../assets/images';
+import { Header } from '../header';
 
 export const StyledMainLayout = styled.div`
     background-color: black;
@@ -8,4 +9,9 @@ export const StyledMainLayout = styled.div`
     height: 100vh;
     display: flex;
     flex-direction: column;
+`;
+
+export const StyledMainBody = styled.main`
+    display: flex;
+    height: 100%;
 `;

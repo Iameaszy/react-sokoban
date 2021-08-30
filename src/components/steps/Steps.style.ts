@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 
-export const StyledHint = styled.div`
+export const StyledSteps = styled.div`
     background: #6d6d1f;
     background-repeat: no-repeat;
     background-size: cover;

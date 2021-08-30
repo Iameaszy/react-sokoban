@@ -12,7 +12,6 @@ export default function Playground(): ReactElement {
     const gameManager = useGameManager();
     const board = useBoard();
     const [gameError, setGameError] = useState<string>('');
-    const [hero, setHero] = useState(true);
     const [stage, setStage] = useState(0);
 
     useEffect(() => {
@@ -31,11 +30,6 @@ export default function Playground(): ReactElement {
         initialiseGame();
         return () => window.removeEventListener('keyup', keyup);
     }, []);
-
-    const hideHero = () => setHero(false);
-    if (hero) {
-        return <Hero {...missions[stage]} heroHandler={hideHero} />;
-    }
 
     return (
         <StylePlayground>

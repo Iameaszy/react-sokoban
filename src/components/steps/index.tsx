@@ -1,15 +1,15 @@
 import React, { ReactElement } from 'react';
 import { getRandomNumberBetween } from '../../utils/getRandomNumberBetween';
 import { hints } from './data';
-import { StyledHint, StyledTitle, StyledContent } from './Hint.style';
+import { StyledSteps, StyledTitle, StyledContent } from './Steps.style';
 
-export const Hint = (): ReactElement => {
+export const Steps = (): ReactElement => {
     const { length: hintsLength } = hints;
 
     return (
-        <StyledHint>
-            <StyledTitle>Hints</StyledTitle>
+        <StyledSteps>
+            <StyledTitle>Steps</StyledTitle>
             <StyledContent>{hints[getRandomNumberBetween(0, hintsLength - 1)]}</StyledContent>
-        </StyledHint>
+        </StyledSteps>
     );
 };

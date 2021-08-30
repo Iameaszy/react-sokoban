@@ -7,6 +7,7 @@ import { BoardProvider } from '../providers/board-provider';
 import { GameProvider } from '../providers/game-provider';
 import { LevelsProvider } from '../providers/levels-provider';
 import HomeScreen from '../screens/home';
+import MissionScreen from '../screens/instruction';
 import Playground from '../screens/playground';
 import SignupScreen from '../screens/signup';
 
@@ -19,6 +20,7 @@ export default function Routes(): ReactElement {
                         <Switch>
                             <HomeLayout path="/" component={HomeScreen} exact />
                             <MainLayout path="/playground" component={Playground} />
+                            <HomeLayout path="/mission/:stage" component={MissionScreen} />
                             <HomeLayout path="/register" component={SignupScreen} />
                             <Route path="/app" component={App} />
                         </Switch>

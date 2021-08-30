@@ -22,7 +22,7 @@ export default function SignupScreen(): ReactElement {
 
         if (name) {
             Storage.setItem('name', name);
-            history.push('/playground');
+            history.push('/mission/1');
         }
     };
 
