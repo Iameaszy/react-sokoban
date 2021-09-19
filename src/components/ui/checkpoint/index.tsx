@@ -3,7 +3,7 @@ import { StyledCheckpoint, StyledDot } from './Checkpoint.style';
 import { CheckpointProps } from './types';
 
 export const Checkpoint = (props: CheckpointProps): ReactElement => (
-    <StyledCheckpoint>
+    <StyledCheckpoint {...props}>
         <StyledDot {...props} />
     </StyledCheckpoint>
 );

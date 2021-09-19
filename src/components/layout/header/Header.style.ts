@@ -35,9 +35,13 @@ export const TimeBar = styled.div`
 `;
 export const ScoreBar = styled.div`
     ${InlineBlock}
+    padding: 10px;
 `;
 
-export const EquationsBar = styled.div``;
+export const EquationsBar = styled.div`
+    position: relative;
+    padding: 10px;
+`;
 
 export const EquationBar = styled.div`
     ${InlineBlock}
@@ -62,4 +66,12 @@ export const NameStageBarWrapper = styled.div`
 
 export const EquationText = styled.span`
     margin-right: 10px;
+`;
+
+export const Plus = styled.div`
+    color: white;
+    position: absolute;
+    top: 34px;
+    left: -15px;
+    font-size: 30px;
 `;

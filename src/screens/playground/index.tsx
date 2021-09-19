@@ -13,7 +13,9 @@ export default function Playground(): ReactElement {
     const board = useBoard();
     const [gameError, setGameError] = useState<string>('');
     const [stage, setStage] = useState(0);
+    const equations = gameManager.getEquations();
 
+    console.log({equations});
     useEffect(() => {
         const keyup = (ev: KeyboardEvent) => gameManager.move(Cast<keyof Directions>(ev.key));
 

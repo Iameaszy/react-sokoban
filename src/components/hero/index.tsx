@@ -10,6 +10,8 @@ import {
     Button,
     EquationsWrapper,
     Equation,
+    Plus,
+    EquationResult,
     EquationsTitle,
     StyledHeroContent,
     EquationOneTwoWrapper,
@@ -18,16 +20,18 @@ import { Props } from './types';
 
 export const Hero = ({ title, body, mission, equations, heroHandler }: Props): ReactElement => {
     const stage = useStage();
-
+    const [equation1, equation2] = equations;
     return (
         <StyledHero>
             <StyledHeroContent>
                 <EquationsWrapper>
                     <EquationsTitle>Equations: </EquationsTitle>
                     <EquationOneTwoWrapper>
-                        <Equation>2x + 3y = 8</Equation>
-                        <Equation>3x + 2y = 7</Equation>
+                        <Equation>{equation1}</Equation>
+                        <Equation> {equation2}</Equation>
+                        {/*<EquationResult>?? = ??</EquationResult>*/}
                     </EquationOneTwoWrapper>
+                    {/*<Plus>+</Plus>*/}
                 </EquationsWrapper>
                 <Title>{title}</Title>
                 <Body>{body}</Body>

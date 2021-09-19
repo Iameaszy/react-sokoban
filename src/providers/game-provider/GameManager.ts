@@ -2,6 +2,7 @@ import { Directions, GameCharacters, GameState } from './types/index';
 
 import { getLevels } from '../../utils';
 import { gameCharacters } from './constants';
+import equations from "../../assets/equations.json";
 
 export class GameManager {
     levels: string[][][] = [];
@@ -15,6 +16,8 @@ export class GameManager {
     board: GameCharacters[][] = [];
 
     checkPoints = 0;
+
+    equations  = {};
 
     playerPos = [-1, -1];
 
@@ -52,6 +55,7 @@ export class GameManager {
 
     private async load() {
         this.levels = await getLevels();
+        this.equations = equations[0];
         this.publishLevels();
     }
 
@@ -63,7 +67,6 @@ export class GameManager {
         this.currentLevel = level;
         this.board = this.getBoard(level - 1);
         this.playerPos = this.getPlayerPositon();
-
         this.publishBoard();
     }
 
@@ -72,6 +75,10 @@ export class GameManager {
             return (this.levels[level] as GameCharacters[][]) || ([] as GameCharacters[][]);
         }
         return this.board;
+    }
+
+    public getEquations() {
+        return this.equations;
     }
 
     public resetLevel() {
@@ -122,7 +129,6 @@ export class GameManager {
 
     private movePlayer(nextTile: number[], character?: GameCharacters) {
         const player = this.getBoardTile(this.playerPos);
-        console.log({ player });
         if (player === gameCharacters.player) {
             this.moveCharacter(this.playerPos, gameCharacters.space);
         } else if (player === gameCharacters.playerOnCheckpoint) {

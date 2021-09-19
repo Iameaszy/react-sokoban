@@ -29,7 +29,8 @@ export const Body = styled.div`
 
 export const Mission = styled.div`
     font-family: sans-serif;
-    color: aqua;
+    //color: aqua;
+    color: yellow;
     font-weight: bold;
     line-height: 1.5;
 `;
@@ -61,6 +62,7 @@ export const EquationsWrapper = styled.div`
     font-weight: bold;
     font-size: 25px;
     display: flex;
+    position: relative;
 `;
 export const EquationsTitle = styled.div``;
 export const Equation = styled.div`
@@ -74,4 +76,15 @@ export const StyledHeroContent = styled.div`
     width: 60%;
     height: 100%;
     padding-top: 5rem;
+`;
+
+
+export const EquationResult = styled(Equation)`
+    margin-left: 5.6rem;    
+`
+export const Plus = styled.div`
+    position: absolute;
+    bottom: 3.2rem;
+    left: 6rem;
+    font-size: 35px;
 `;

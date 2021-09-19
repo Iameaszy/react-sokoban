@@ -1,5 +1,6 @@
 import React, { ReactElement, useEffect } from 'react';
 import { useStage } from '../../../providers/game-provider';
+import { useUser } from '../../../providers/user-provider';
 import { Storage } from '../../../utils/storage';
 import {
     BarWrapper,
@@ -12,37 +13,38 @@ import {
     EquationsBar,
     EquationBar,
     EquationText,
+    Plus
 } from './Header.style';
 import { Props } from './types';
 
 export const Header = ({ ...rest }: Props): ReactElement => {
-    const stage = useStage();
-
-    useEffect(() => {
-        console.log('stage changed', stage);
-    }, [stage]);
-
-    const { name, score } = Storage.getPlayer();
+    const {name} = Storage.getUSer() || {};
+    const {score,stage, time} = useUser();
 
     return (
         <StyledHeader {...rest}>
             <BarWrapper>
                 <NameStageBarWrapper>
                     <NameBar>{name}</NameBar>
-                    <StageBar>{`Stage ${stage}`}</StageBar>
+                    <StageBar>{stage}</StageBar>
                 </NameStageBarWrapper>
-                <ScoreBar>{160}</ScoreBar>
+                <ScoreBar>Scores: {score}</ScoreBar>
                 <EquationsBar>
                     <EquationBar>
-                        <EquationText>Eqn 1:</EquationText>
-                        <span>2x + 3y = 8</span>
+                        <EquationText>Eqn:</EquationText>
+                        <span> 2x + 3(7) = 8</span>
                     </EquationBar>
-                    <EquationBar>
+                    {/* <EquationBar>
                         <EquationText>Eqn 2:</EquationText>
-                        <span>3x + 2y = 7</span>
-                    </EquationBar>
+                        <span>y = 7</span>
+                    </EquationBar> */}
+                    {/* <EquationBar>
+                        <EquationText>Result:</EquationText>
+                        <span>?? = ??</span>
+                    </EquationBar> */}
+                    {/* <Plus>+</Plus> */}
                 </EquationsBar>
-                <TimeBar>9:30:59</TimeBar>
+                <TimeBar>{time}</TimeBar>
             </BarWrapper>
         </StyledHeader>
     );

@@ -3,12 +3,11 @@ export const getLevelsFromText = (levelTexts: string): string[][][] => {
         .split(';')
         .map((levelString) =>
             levelString
-                .replace(/[^#.$bgrychszop*xw@\s]/g, '')
+                .replace(/[^#.$bgrychszop*xw@\s1]/g, '')
                 .split('\n')
                 .filter((level) => !!level.trim())
                 .map((level) => level.split('')),
         )
         .filter((levelString) => !!levelString.length);
-
     return levelStrings;
 };

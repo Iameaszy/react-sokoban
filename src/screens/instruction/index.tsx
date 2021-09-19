@@ -11,7 +11,6 @@ export default function MissionScreen(): ReactElement {
     const history = useHistory();
 
     const heroHandler = () => history.push('/playground');
-
     return (
         <StyledMission>
             <Hero {...missions[Cast<number>(stage) - 1 || 0]} heroHandler={heroHandler} />

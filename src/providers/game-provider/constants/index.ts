@@ -24,6 +24,7 @@ export const gameCharacters = {
     xBox: 'x',
     space: ' ',
     boxOnCheckpoint: '*', // when a box is placed on a checkpoint
+    blackBoxOnCheckpoint: '1',
     playerOnCheckpoint: '+', // When a player stand on a checkpoint
 } as const;
 export const equations = {

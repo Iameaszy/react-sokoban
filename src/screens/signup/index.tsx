@@ -1,5 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useUser } from '../../providers/user-provider';
 import { Storage } from '../../utils/storage';
 import {
     StyledSignupScreen,
@@ -12,8 +13,7 @@ import {
 
 export default function SignupScreen(): ReactElement {
     const history = useHistory();
-    const [name, setName] = useState('');
-    const [nameError, setNameError] = useState(false);
+    const {name, setName, stage, score, time} = useUser()
 
     const handleNameChange = (name: string) => setName(name);
 
@@ -21,7 +21,7 @@ export default function SignupScreen(): ReactElement {
         e.preventDefault();
 
         if (name) {
-            Storage.setItem('name', name);
+            Storage.setUser({name,stage,score,time});
             history.push('/mission/1');
         }
     };

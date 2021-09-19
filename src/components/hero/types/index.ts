@@ -2,6 +2,6 @@ export type Props = {
     title: string;
     body: string;
     mission: string;
-    equations?: any;
+    equations: string[];
     heroHandler: () => void;
 };

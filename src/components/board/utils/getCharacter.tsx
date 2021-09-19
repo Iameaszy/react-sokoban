@@ -3,7 +3,7 @@ import { gameCharacters } from '../../../providers/game-provider/constants';
 import { GameCharacters } from '../../../providers/game-provider/types';
 import { Block } from '../../ui/block';
 import { Box } from '../../ui/box';
-import { BoxOnCheckpoint } from '../../ui/box-on-checkpoint';
+import { BlackBoxOnCheckpoint, BoxOnCheckpoint } from '../../ui/box-on-checkpoint';
 import { Checkpoint } from '../../ui/checkpoint';
 import { Player } from '../../ui/player';
 import { Space } from '../../ui/space';
@@ -46,5 +46,7 @@ export const getCharacter = (character: GameCharacters) => {
             return <Checkpoint backgroundColor="red" />;
         case gameCharacters.boxOnCheckpoint:
             return <BoxOnCheckpoint />;
+        case gameCharacters.blackBoxOnCheckpoint:
+            return <BlackBoxOnCheckpoint />;
     }
 };
